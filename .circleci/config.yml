@@ -13,22 +13,256 @@ executors:
       - image: "circleci/node:<< parameters.node >>-stretch-browsers"
 
 commands:
-  clone:
+  clone_repo:
     parameters:
-      name:
+      repo:
         type: string
     steps:
-      - git clone https://github.com/aurelia/<< parameters.name >>
-      - cd << parameters.name >>
+      - run: git clone https://github.com/aurelia/<< parameters.repo >>
+      - run: cd << parameters.repo >>
 
 jobs:
   polyfills:
     executor: docker-circleci
     steps:
-      - checkout:
-          name: polyfills
+      - clone_repo:
+          repo: 
+  pal:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: pal
+  pal-browser:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: pal-browser
+  pal-nodejs:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: pal-nodejs
+  logging:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: logging
+  logging-console:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: logging-console
+  metadata:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: metadata
+  dependency-injection:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: dependency-injection
+  history:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: history
+  history-browser:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: history-browser
+  path:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: path
+  http-client:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: http-client
+  fetch-client:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: fetch-client
+  loader:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: loader
+  loader-default:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: loader-default
+  event-aggregator:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: event-aggregator
+  task-queue:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: task-queue
+  route-recognizer:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: route-recognizer
+  binding:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: binding
+  router:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: router
+  templating:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: templating
+  templating-binding:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: templating-binding
+  templating-resources:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: templating-resources
+  templating-router:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: templating-router
+  framework:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: framework
+  bootstrapper:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: bootstrapper
+  animator-css:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: animator-css
+  animator-velocity:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: animator-velocity
+  html-import-template-loader:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: html-import-template-loader
+  skeleton-plugin:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: skeleton-plugin
+  skeleton-navigation:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: skeleton-navigation
+  skeleton-navigation-typescript:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: skeleton-navigation-typescript
+  i18n:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: i18n
+  validation:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: validation
+  dialog:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: dialog
+  ui-virtualization:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: ui-virtualization
+  template-lint:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: template-lint
+  store:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: store
+  cli:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: cli
+  script:
+    executor: docker-circleci
+    steps:
+      - clone_repo:
+          repo: script
 
 workflows:
   build:
     jobs:
       - polyfills
+      - pal
+      - pal-browser
+      - pal-nodejs
+      - logging
+      - logging-console
+      - metadata
+      - dependency-injection
+      - history
+      - history-browser
+      - path
+      - http-client
+      - fetch-client
+      - loader
+      - loader-default
+      - event-aggregator
+      - task-queue
+      - route-recognizer
+      - binding
+      - router
+      - templating
+      - templating-binding
+      - templating-resources
+      - templating-router
+      - framework
+      - bootstrapper
+      - animator-css
+      - animator-velocity
+      - html-import-template-loader
+      - skeleton-plugin
+      - skeleton-navigation
+      - skeleton-navigation-typescript
+      - i18n
+      - validation
+      - dialog
+      - ui-virtualization
+      - template-lint
+      - store
+      - cli
+      - script
