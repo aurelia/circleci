@@ -13,10 +13,10 @@ executors:
       - image: "circleci/node:<< parameters.node >>-stretch-browsers"
 
 commands:
-  parameters:
-    name:
-      type: string
   clone:
+    parameters:
+      name:
+        type: string
     steps:
       - git clone https://github.com/aurelia/<< parameters.name >>
       - cd << parameters.name >>
