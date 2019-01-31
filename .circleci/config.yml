@@ -26,10 +26,9 @@ jobs:
     executor: docker-circleci
     steps:
       - checkout:
-        name: polyfills
+          name: polyfills
 
 workflows:
   build:
     jobs:
       - polyfills
-      
