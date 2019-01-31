@@ -20,6 +20,7 @@ commands:
     steps:
       - run: git clone https://github.com/aurelia/<< parameters.repo >>
       - run: cd << parameters.repo >>
+      - run: npm ci
 
 jobs:
   polyfills:
@@ -254,10 +255,6 @@ workflows:
       - bootstrapper
       - animator-css
       - animator-velocity
-      - html-import-template-loader
-      - skeleton-plugin
-      - skeleton-navigation
-      - skeleton-navigation-typescript
       - i18n
       - validation
       - dialog
