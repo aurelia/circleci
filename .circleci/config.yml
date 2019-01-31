@@ -19,8 +19,11 @@ commands:
         type: string
     steps:
       - run: git clone https://github.com/aurelia/<< parameters.repo >>
-      - run: cd << parameters.repo >>
-      - run: npm ci
+      - run:
+          name: Install
+          command: |
+            cd << parameters.repo >>
+            npm ci
 
 jobs:
   polyfills:
