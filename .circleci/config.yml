@@ -4,98 +4,11 @@ orbs:
   aurelia_v1_tests:
     jobs:
       run_all:
-        parameters:
-          repo_name:
-            description: Name of the Aurelia repository
-            type: string
-        executor: docker_circleci
         steps:
-          - clone_install_build_test:
-              repo_name: << parameters.repo_name >>
-    commands:
-      clone_install_build_test:
-        parameters:
-          repo_name:
-            type: string
-        steps:
-          - run: git clone https://github.com/aurelia/<< parameters.repo_name >>
-          - run:
-              name: Install
-              command: |
-                cd << parameters.repo_name >>
-                npm ci
-                npm i jspm
-                ./node_modules/.bin/jspm install
-                ./node_modules/.bin/gulp build
-                ./node_modules/.bin/karma start --single-run
-                ./node_modules/.bin/gulp prepare-release
-    executors:
-      docker_circleci:
-        node_version:
-          type: string
-          default: "10.12"
-        working_directory: "~/repo"
-        docker:
-          - image: "circleci/node:<< parameters.node_version >>-stretch-browsers"
+          - run: echo "test"
           
 version: 2.1
 workflows:
   run_aurelia_v1_tests:
     jobs:
-      - aurelia_v1_tests/run_all:
-          name: "polyfills"
-          repo_name: "polyfills"
-      - aurelia_v1_tests/run_all:
-          name: "pal"
-          repo_name: "pal"
-      - aurelia_v1_tests/run_all:
-          name: "logging"
-          repo_name: "logging"
-      - aurelia_v1_tests/run_all:
-          name: "logging-console"
-          repo_name: "logging-console"
-      - aurelia_v1_tests/run_all:
-          name: "metadata"
-          repo_name: "metadata"
-      - aurelia_v1_tests/run_all:
-          name: "history"
-          repo_name: "history"
-      - aurelia_v1_tests/run_all:
-          name: "history-browser"
-          repo_name: "history-browser"
-      - aurelia_v1_tests/run_all:
-          name: "path"
-          repo_name: "path"
-      - aurelia_v1_tests/run_all:
-          name: "http-client"
-          repo_name: "http-client"
-      - aurelia_v1_tests/run_all:
-          name: "loader"
-          repo_name: "loader"
-      - aurelia_v1_tests/run_all:
-          name: "loader-default"
-          repo_name: "loader-default"
-      - aurelia_v1_tests/run_all:
-          name: "event-aggregator"
-          repo_name: "event-aggregator"
-      - aurelia_v1_tests/run_all:
-          name: "task-queue"
-          repo_name: "task-queue"
-      - aurelia_v1_tests/run_all:
-          name: "route-recognizer"
-          repo_name: "route-recognizer"
-      - aurelia_v1_tests/run_all:
-          name: "binding"
-          repo_name: "binding"
-      - aurelia_v1_tests/run_all:
-          name: "templating"
-          repo_name: "templating"
-      - aurelia_v1_tests/run_all:
-          name: "templating-binding"
-          repo_name: "templating-binding"
-      - aurelia_v1_tests/run_all:
-          name: "bootstrapper"
-          repo_name: "bootstrapper"
-      - aurelia_v1_tests/run_all:
-          name: "i18n"
-          repo_name: "i18n"
+      - aurelia_v1_tests/run_all
