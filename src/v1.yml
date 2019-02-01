@@ -64,6 +64,28 @@ commands:
           command: |
             cd e2e-tests
             npm run protractor
+  merge_and_dist:
+    parameters:
+      from:
+        type: string
+      to:
+        type: string
+      message:
+        type: string
+        default: "chore(all): add latest build artifacts"
+    steps:
+      - run: git add dist/* --force
+      - run: git stash
+      - run: git checkout << parameters.to >>
+      - run: git merge << parameters.from >> --no-ff --no-edit -Xtheirs
+      - run: rm -rf dist
+      - run: git add .
+      - run: git stash pop
+      - run: git add dist/* --force
+      - run: git add .
+      - run: git commit --allow-empty -m "<< parameters.message >>"
+      - run: git push origin << parameters.to >>
+
 jobs:
   prepare_external:
     parameters:
