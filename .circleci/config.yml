@@ -4,8 +4,11 @@ orbs:
   aurelia_v1_tests:
     executors:
       docker_circleci:
+        parameters:
+          node_version:
+            type: string
         docker:
-          - image: circleci/node:10.12-stretch-browsers
+          - image: circleci/node:<<parameters.node_version>>-stretch-browsers
     commands:
       clone_install_build_test:
         parameters:
@@ -26,9 +29,13 @@ orbs:
     jobs:
       run_all:
         parameters:
+          node_version:
+            type: string
           repo_name:
             type: string
-        executor: docker_circleci
+        executor:
+          docker_circleci:
+            node_version: <<parameters.node_version>>
         steps:
           - clone_install_build_test:
               repo_name: <<parameters.repo_name>>
@@ -38,4 +45,6 @@ workflows:
   main:
     jobs:
       - aurelia_v1_tests/run_all:
+          name: polyfills
           repo_name: polyfills
+          node_version: 10.12
