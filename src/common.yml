@@ -21,7 +21,7 @@ commands:
       email:
         type: string
         default: "aurelia@bluespire.com"
-      name:
+      username:
         type: string
         default: "AureliaEffect"
     steps:
@@ -29,14 +29,14 @@ commands:
           name: "git config"
           command: |
             git config --global user.email <<parameters.email>>
-            git config --global user.name <<parameters.name>>
+            git config --global user.name <<parameters.username>>
             git config --global core.mergeoptions --no-edit
   setup_verdaccio:
     parameters:
       email:
         type: string
         default: "aurelia@bluespire.com"
-      name:
+      username:
         type: string
         default: "aureliaeffect"
       password:
@@ -51,7 +51,7 @@ commands:
           name: "verdaccio"
           background: true
           command: verdaccio
-      - run: npm-cli-login -u <<parameters.name>> -p <<parameters.password>> -e <<parameters.email>> -r <<parameters.registry>>
+      - run: npm-cli-login -u <<parameters.username>> -p <<parameters.password>> -e <<parameters.email>> -r <<parameters.registry>>
   npm_publish:
     parameters:
       registry:
