@@ -8,12 +8,15 @@ orbs:
           - image: circleci/node:10.12-stretch-browsers
     commands:
       clone_install_build_test:
+        parameters:
+          repo_name:
+            type: string
         steps:
-          - run: git clone https://github.com/aurelia/polyfills
+          - run: git clone https://github.com/aurelia/<<repo_name>>
           - run:
               name: Install
               command: |
-                cd polyfills
+                cd <<repo_name>>
                 npm ci
                 npm i jspm
                 ./node_modules/.bin/jspm install
@@ -22,12 +25,17 @@ orbs:
                 ./node_modules/.bin/gulp prepare-release
     jobs:
       run_all:
+        parameters:
+          repo_name:
+            type: string
         executor: docker_circleci
         steps:
           - clone_install_build_test
+              repo_name: <<repo_name>>
 
 version: 2.1
 workflows:
   main:
     jobs:
       - aurelia_v1_tests/run_all
+          repo_name: polyfills
