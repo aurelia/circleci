@@ -3,6 +3,7 @@ description: Aurelia shacommonred utilities
 
 executors:
   docker_circleci:
+    working_directory: ~/repo
     docker:
       - image: circleci/node:10.12-stretch-browsers
 commands:
