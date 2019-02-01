@@ -236,7 +236,7 @@ jobs:
     steps:
       - clone_repo:
           repo: animator-css
-      - build_npm:
+      - build_gulp:
           repo: animator-css
   animator-velocity:
     executor: docker-circleci
@@ -251,8 +251,6 @@ jobs:
       - clone_repo:
           repo: i18n
       - build_npm:
-          repo: i18n
-      - build_gulp:
           repo: i18n
   validation:
     executor: docker-circleci
