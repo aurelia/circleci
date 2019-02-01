@@ -87,7 +87,7 @@ commands:
       - run: git push origin << parameters.to >>
 
 jobs:
-  prepare_external:
+  build_test_external:
     parameters:
       repo_name:
         type: string
@@ -104,7 +104,7 @@ jobs:
       - common/setup_verdaccio
       - install_build_test_gulp
       - common/npm_publish
-  run_all:
+  build_test:
     parameters:
       process:
         type: string
@@ -117,3 +117,27 @@ jobs:
       - install_build_test_gulp
       - common/npm_publish
       - install_run_e2e_tests
+  build_test_merge:
+    parameters:
+      process:
+        type: string
+        default: "gulp"
+      from:
+        type: string
+      to:
+        type: string
+      message:
+        type: string
+        default: "chore(all): add latest build artifacts"
+    executor: common/docker_circleci
+    steps:
+      - checkout
+      - common/configure_git
+      - common/setup_verdaccio
+      - install_build_test_gulp
+      - common/npm_publish
+      - install_run_e2e_tests
+      - merge_and_dist:
+          from: <<parameters.from>>
+          to: <<parameters.to>>
+          message: <<parameters.message>>
