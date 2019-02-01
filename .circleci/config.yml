@@ -8,8 +8,9 @@ orbs:
       run_all:
         parameters:
           repo_name:
+            description: Name of the Aurelia repository
             type: string
-        executor: docker-circleci
+        executor: docker_circleci
         steps:
           - clone_install_build_test:
               repo_name: << parameters.repo_name >>
@@ -31,7 +32,7 @@ orbs:
                 ./node_modules/.bin/karma start --single-run
                 ./node_modules/.bin/gulp prepare-release
     executors:
-      docker-circleci:
+      docker_circleci:
         node_version:
           type: string
           default: "10.12"
