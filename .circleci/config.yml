@@ -1,5 +1,7 @@
 version: 2.1
 
+description: Aurelia V1 tests
+
 orbs:
   aurelia_v1_tests:
     jobs:
@@ -7,10 +9,10 @@ orbs:
         parameters:
           repo_name:
             type: string
-      executor: docker-circleci
-      steps:
-        - clone_install_build_test:
-            repo_name: << parameters.repo_name >>
+        executor: docker-circleci
+        steps:
+          - clone_install_build_test:
+              repo_name: << parameters.repo_name >>
     commands:
       clone_install_build_test:
         parameters:
