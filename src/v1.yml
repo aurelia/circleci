@@ -1,17 +1,10 @@
 version: 2.1
 description: Aurelia v1
 
-executors:
-  docker_circleci:
-    docker:
-      - image: circleci/node:10.12-stretch-browsers
+orbs:
+  shared: aurelia/shared@0.0.1
+
 commands:
-  clone_repo:
-    parameters:
-      repo_name:
-        type: string
-    steps:
-      - run: git clone https://github.com/aurelia/<<parameters.repo_name>> .
   install_build_test_gulp:
     steps:
       - run:
@@ -36,8 +29,8 @@ jobs:
         type: string
       process:
         type: string
-    executor: docker_circleci
+    executor: shared/docker_circleci
     steps:
-      - clone_repo:
+      - shared/clone_repo:
           repo_name: <<parameters.repo_name>>
       - install_build_test_gulp

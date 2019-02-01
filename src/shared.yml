@@ -1,0 +1,32 @@
+version: 2.1
+description: Aurelia shared utilities
+
+executors:
+  docker_circleci:
+    docker:
+      - image: circleci/node:10.12-stretch-browsers
+commands:
+  clone_repo:
+    parameters:
+      repo_name:
+        type: string
+    steps:
+      - run: git clone https://github.com/aurelia/<<parameters.repo_name>> .
+  configure_git:
+      - run:
+          name: "git config"
+          command: |
+            git config --global user.email "aurelia@bluespire.com"
+            git config --global user.name "AureliaEffect"
+            git config --global core.mergeoptions --no-edit
+  setup_verdaccio:
+      - run: sudo npm i -g verdaccio npm-cli-login
+      - run:
+          name: "verdaccio"
+          background: true
+          command: verdaccio
+      - run: npm-cli-login -u aureliaeffect -p aurelia -e aurelia@bluespire.com -r http://localhost:4873
+  npm_publish:
+      - run:
+          name: "npm publish local"
+          command: npm publish --registry http://localhost:4873
