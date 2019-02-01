@@ -13,6 +13,7 @@ commands:
     steps:
       - run: git clone https://github.com/aurelia/<<parameters.repo_name>> .
   configure_git:
+    steps:
       - run:
           name: "git config"
           command: |
@@ -20,6 +21,7 @@ commands:
             git config --global user.name "AureliaEffect"
             git config --global core.mergeoptions --no-edit
   setup_verdaccio:
+    steps:
       - run: sudo npm i -g verdaccio npm-cli-login
       - run:
           name: "verdaccio"
@@ -27,6 +29,7 @@ commands:
           command: verdaccio
       - run: npm-cli-login -u aureliaeffect -p aurelia -e aurelia@bluespire.com -r http://localhost:4873
   npm_publish:
+    steps:
       - run:
           name: "npm publish local"
           command: npm publish --registry http://localhost:4873
