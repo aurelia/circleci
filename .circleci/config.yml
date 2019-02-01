@@ -13,7 +13,7 @@ orbs:
           - run:
               name: Install
               command: |
-                cd polyfills>
+                cd polyfills
                 npm ci
                 npm i jspm
                 ./node_modules/.bin/jspm install
