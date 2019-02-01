@@ -40,4 +40,3 @@ workflows:
       - aurelia_v1_tests/run_all:
           name: polyfills
           repo_name: polyfills
-          node_version: 10.12
