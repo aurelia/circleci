@@ -38,6 +38,7 @@ commands:
             ./node_modules/.bin/jspm install
             ./node_modules/.bin/gulp build
             ./node_modules/.bin/karma start --single-run
+            ./node_modules/.bin/gulp prepare-release
             
   build_npm:
     parameters:
@@ -50,6 +51,7 @@ commands:
             cd << parameters.repo >>
             npm run build
             npm run test
+            npm run prepare-release
             
 
 jobs:
@@ -298,7 +300,6 @@ workflows:
       - polyfills
       - pal
       - pal-browser
-      - pal-nodejs
       - logging
       - logging-console
       - metadata
@@ -307,21 +308,15 @@ workflows:
       - history-browser
       - path
       - http-client
-      - fetch-client
       - loader
       - loader-default
       - event-aggregator
       - task-queue
       - route-recognizer
       - binding
-      - router
       - templating
       - templating-binding
-      - templating-resources
-      - templating-router
-      - framework
       - bootstrapper
-      - animator-css
       - animator-velocity
       - i18n
       - validation
