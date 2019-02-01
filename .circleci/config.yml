@@ -1,42 +1,13 @@
-description: # The purpose of this orb
+version: 2.1
 
 orbs:
-  aurelia_v1_tests:
-    executors:
-      docker_circleci:
-        docker:
-          - image: circleci/node:10.12-stretch-browsers
-    commands:
-      clone_install_build_test:
-        parameters:
-          repo_name:
-            type: string
-        steps:
-          - run: git clone https://github.com/aurelia/<<parameters.repo_name>>
-          - run:
-              name: Install
-              command: |
-                cd <<parameters.repo_name>>
-                npm ci
-                npm i jspm
-                ./node_modules/.bin/jspm install
-                ./node_modules/.bin/gulp build
-                ./node_modules/.bin/karma start --single-run
-                ./node_modules/.bin/gulp prepare-release
-    jobs:
-      run_all:
-        parameters:
-          repo_name:
-            type: string
-        executor: docker_circleci
-        steps:
-          - clone_install_build_test:
-              repo_name: <<parameters.repo_name>>
+  orb-tools: circleci/orb-tools@2.0.0
 
-version: 2.1
 workflows:
-  main:
+  build_test_deploy:
     jobs:
-      - aurelia_v1_tests/run_all:
-          name: polyfills
-          repo_name: polyfills
+      - orb-tools/publish:
+          orb-path: src/v1.yml
+          orb-ref: aurelia/v1@0.0.1:${CIRCLE_BRANCH}
+          publish-token-variable: "$CIRCLECI_DEV_API_TOKEN"
+          validate: true

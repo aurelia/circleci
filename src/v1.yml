@@ -1,0 +1,43 @@
+version: 2.1
+description: Aurelia v1
+
+executors:
+  docker_circleci:
+    docker:
+      - image: circleci/node:10.12-stretch-browsers
+commands:
+  clone_repo:
+    parameters:
+      repo_name:
+        type: string
+    steps:
+      - run: git clone https://github.com/aurelia/<<parameters.repo_name>> .
+  install_build_test_gulp:
+    steps:
+      - run:
+          name: install
+          command: |
+            npm ci
+            npm i jspm
+            ./node_modules/.bin/jspm install
+      - run:
+          name: test
+          command: ./node_modules/.bin/karma start --single-run
+      - run:
+          name: build
+          command: ./node_modules/.bin/gulp build
+      - run:
+          name: prepare-release
+          command: ./node_modules/.bin/gulp prepare-release
+jobs:
+  run_all:
+    parameters:
+      repo_name:
+        type: string
+      process:
+        type: string
+    executor: docker_circleci
+    steps:
+      - clone_repo:
+          repo_name: <<parameters.repo_name>>
+      - install_build_test_gulp
