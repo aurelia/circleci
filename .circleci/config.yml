@@ -273,13 +273,6 @@ jobs:
           repo: ui-virtualization
       - build_npm:
           repo: ui-virtualization
-  template-lint:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: template-lint
-      - build_npm:
-          repo: template-lint
   store:
     executor: docker-circleci
     steps:
@@ -287,13 +280,6 @@ jobs:
           repo: store
       - build_npm:
           repo: store
-  cli:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: cli
-      - build_npm:
-          repo: cli
   script:
     executor: docker-circleci
     steps:
@@ -337,7 +323,5 @@ workflows:
       - validation
       - dialog
       - ui-virtualization
-      - template-lint
       - store
-      - cli
       - script
