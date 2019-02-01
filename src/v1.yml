@@ -80,7 +80,7 @@ jobs:
           dir: <<parameters.repo_name>>
       - common/configure_git
       - common/setup_verdaccio
-      - v1/install_build_test_gulp
+      - install_build_test_gulp
       - common/npm_publish
   run_all:
     parameters:
@@ -92,6 +92,6 @@ jobs:
       - checkout
       - common/configure_git
       - common/setup_verdaccio
-      - v1/install_build_test_gulp
+      - install_build_test_gulp
       - common/npm_publish
-      - v1/install_run_e2e_tests
+      - install_run_e2e_tests
