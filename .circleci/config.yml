@@ -144,7 +144,7 @@ jobs:
     steps:
       - clone_repo:
           repo: fetch-client
-      - build_npm:
+      - build_gulp:
           repo: fetch-client
   loader:
     executor: docker-circleci
@@ -306,6 +306,7 @@ workflows:
       - history-browser
       - path
       - http-client
+      - fetch-client
       - loader
       - loader-default
       - event-aggregator
