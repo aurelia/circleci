@@ -42,13 +42,27 @@ commands:
         default: "http://localhost:4873"
     steps:
       - run:
-          name: "install and run e2e tests"
+          name: "install e2e tests"
           command: |
             git clone <<parameters.test_repo>>
             cd e2e-tests
             npm install --registry <<parameters.registry>>
             npm run build
+      - run:
+          name: "run the unit tests"
+          command: |
+            cd e2e-tests
             npm run test
+      - run:
+          name: "serve the test app"
+          background: true
+          command: |
+            cd e2e-tests
+            npm run run
+      - run:
+          name: "run the e2e tests"
+          command: |
+            cd e2e-tests
             npm run protractor
 jobs:
   run_all:
