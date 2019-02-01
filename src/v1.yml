@@ -22,7 +22,7 @@ commands:
       - run:
           name: prepare-release
           command: ./node_modules/.bin/gulp prepare-release
-  install_e2e_tests:
+  install_run_e2e_tests:
     parameters:
       registry:
         type: string
