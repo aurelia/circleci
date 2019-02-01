@@ -11,8 +11,11 @@ commands:
     parameters:
       repo_name:
         type: string
+      dir:
+        type: string
+        default: "."
     steps:
-      - run: git clone https://github.com/aurelia/<<parameters.repo_name>> .
+      - run: git clone https://github.com/aurelia/<<parameters.repo_name>> <<parameters.dir>>
   configure_git:
     parameters:
       email:

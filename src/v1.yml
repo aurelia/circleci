@@ -65,6 +65,22 @@ commands:
             cd e2e-tests
             npm run protractor
 jobs:
+  prepare_external:
+    parameters:
+      repo_name:
+        type: string
+      process:
+        type: string
+    executor: common/docker_circleci
+    steps:
+      - run: mkdir <<parameters.repo_name>>
+      - common/clone_repo:
+          repo_name: <<parameters.repo_name>>
+          dir: <<parameters.repo_name>>
+      - common/configure_git
+      - common/setup_verdaccio
+      - v1/install_build_test_gulp
+      - common/npm_publish
   run_all:
     parameters:
       repo_name:
@@ -73,6 +89,9 @@ jobs:
         type: string
     executor: common/docker_circleci
     steps:
-      - common/clone_repo:
-          repo_name: <<parameters.repo_name>>
-      - install_build_test_gulp
+      - checkout
+      - common/configure_git
+      - common/setup_verdaccio
+      - v1/install_build_test_gulp
+      - common/npm_publish
+      - v1/install_run_e2e_tests
