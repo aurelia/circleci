@@ -37,7 +37,7 @@ commands:
             npm i jspm
             ./node_modules/.bin/jspm install
             ./node_modules/.bin/gulp build
-            ./node_modules/.bin/gulp test
+            ./node_modules/.bin/karma start --single-run
             
   build_npm:
     parameters:
