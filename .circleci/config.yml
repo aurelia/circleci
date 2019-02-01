@@ -30,12 +30,12 @@ orbs:
             type: string
         executor: docker_circleci
         steps:
-          - clone_install_build_test
+          - clone_install_build_test:
               repo_name: <<repo_name>>
 
 version: 2.1
 workflows:
   main:
     jobs:
-      - aurelia_v1_tests/run_all
+      - aurelia_v1_tests/run_all:
           repo_name: polyfills
