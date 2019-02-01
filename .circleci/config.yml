@@ -12,11 +12,11 @@ orbs:
           repo_name:
             type: string
         steps:
-          - run: git clone https://github.com/aurelia/<<repo_name>>
+          - run: git clone https://github.com/aurelia/<< repo_name >>
           - run:
               name: Install
               command: |
-                cd <<repo_name>>
+                cd << repo_name >>
                 npm ci
                 npm i jspm
                 ./node_modules/.bin/jspm install
@@ -31,7 +31,7 @@ orbs:
         executor: docker_circleci
         steps:
           - clone_install_build_test:
-              repo_name: <<repo_name>>
+              repo_name: << repo_name >>
 
 version: 2.1
 workflows:
