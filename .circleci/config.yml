@@ -24,6 +24,7 @@ commands:
           command: |
             cd << parameters.repo >>
             npm ci
+            ./node_modules/.bin/gulp build
 
 jobs:
   polyfills:
