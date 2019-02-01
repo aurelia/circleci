@@ -318,4 +318,3 @@ workflows:
       - bootstrapper
       - i18n
       - validation
-      - dialog
