@@ -8,6 +8,6 @@ workflows:
     jobs:
       - orb-tools/publish:
           orb-path: src/v1.yml
-          orb-ref: aurelia/v1@0.0.1:${CIRCLE_BRANCH}
+          orb-ref: aurelia/v1@0.0.1
           publish-token-variable: "$CIRCLECI_DEV_API_TOKEN"
           validate: true
