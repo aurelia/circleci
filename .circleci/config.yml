@@ -1,13 +1,11 @@
 description: # The purpose of this orb
 
 orbs:
-  my-orb:
-    orbs:
-      codecov: circleci/codecov-clojure@0.0.4
+  aurelia_v1_tests:
     executors:
       specialthingsexecutor:
         docker:
-          - image: circleci/ruby:1.4.2
+          - image: circleci/node:10.12-stretch-browsers
     commands:
       dospecialthings:
         steps:
@@ -17,11 +15,9 @@ orbs:
         executor: specialthingsexecutor
         steps:
           - dospecialthings
-          - codecov/upload:
-              path: ~/tmp/results.xml
 
 version: 2.1
 workflows:
   main:
     jobs:
-      - my-orb/myjob
+      - aurelia_v1_tests/myjob
