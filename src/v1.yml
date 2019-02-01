@@ -2,7 +2,7 @@ version: 2.1
 description: Aurelia v1
 
 orbs:
-  common: aurelia/common@0.0.2
+  common: aurelia/common@0.0.1
 
 commands:
   install_build_test_gulp:
