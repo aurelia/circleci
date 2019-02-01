@@ -10,18 +10,18 @@ orbs:
       executor: docker-circleci
       steps:
         - clone_install_build_test:
-            repo_name: <<parameters.repo_name>>
+            repo_name: << parameters.repo_name >>
     commands:
       clone_install_build_test:
         parameters:
           repo_name:
             type: string
         steps:
-          - run: git clone https://github.com/aurelia/<<parameters.repo_name>>
+          - run: git clone https://github.com/aurelia/<< parameters.repo_name >>
           - run:
               name: Install
               command: |
-                cd <<parameters.repo_name>>
+                cd << parameters.repo_name >>
                 npm ci
                 npm i jspm
                 ./node_modules/.bin/jspm install
@@ -33,63 +33,9 @@ orbs:
         node_version:
           type: string
           default: "10.12"
-        working_directory: ~/repo
+        working_directory: "~/repo"
         docker:
-          - image: "circleci/node:<<parameters.node_version>>-stretch-browsers"
-
-scalar-1: &working_dir ~/repo
-
-executors:
-  docker-circleci:
-    parameters:
-      node:
-        type: string
-        default: "10.12"
-    working_directory: *working_dir
-    docker:
-      - image: "circleci/node:<< parameters.node >>-stretch-browsers"
-
-commands:
-  clone_repo:
-    parameters:
-      repo:
-        type: string
-    steps:
-      - run: git clone https://github.com/aurelia/<< parameters.repo >>
-      - run:
-          name: Install
-          command: |
-            cd << parameters.repo >>
-            npm ci
-            
-  build_gulp:
-    parameters:
-      repo:
-        type: string
-    steps:
-      - run:
-          name: Build
-          command: |
-            cd << parameters.repo >>
-            npm i jspm
-            ./node_modules/.bin/jspm install
-            ./node_modules/.bin/gulp build
-            ./node_modules/.bin/karma start --single-run
-            ./node_modules/.bin/gulp prepare-release
-            
-  build_npm:
-    parameters:
-      repo:
-        type: string
-    steps:
-      - run:
-          name: Build
-          command: |
-            cd << parameters.repo >>
-            npm run build
-            npm run test
-            npm run prepare-release
-            
+          - image: "circleci/node:<< parameters.node_version >>-stretch-browsers"
 
 jobs:
   polyfills:
@@ -106,20 +52,6 @@ jobs:
           repo: pal
       - build_gulp:
           repo: pal
-  pal-browser:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: pal-browser
-      - build_gulp:
-          repo: pal-browser
-  pal-nodejs:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: pal-nodejs
-      - build_gulp:
-          repo: pal-nodejs
   logging:
     executor: docker-circleci
     steps:
@@ -225,13 +157,6 @@ jobs:
           repo: binding
       - build_gulp:
           repo: binding
-  router:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: router
-      - build_npm:
-          repo: router
   templating:
     executor: docker-circleci
     steps:
@@ -246,20 +171,6 @@ jobs:
           repo: templating-binding
       - build_gulp:
           repo: templating-binding
-  templating-resources:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: templating-resources
-      - build_gulp:
-          repo: templating-resources
-  templating-router:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: templating-router
-      - build_npm:
-          repo: templating-router
   framework:
     executor: docker-circleci
     steps:
@@ -274,20 +185,6 @@ jobs:
           repo: bootstrapper
       - build_gulp:
           repo: bootstrapper
-  animator-css:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: animator-css
-      - build_gulp:
-          repo: animator-css
-  animator-velocity:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: animator-velocity
-      - build_gulp:
-          repo: animator-velocity
   i18n:
     executor: docker-circleci
     steps:
@@ -302,98 +199,64 @@ jobs:
           repo: validation
       - build_npm:
           repo: validation
-  dialog:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: dialog
-      - build_npm:
-          repo: dialog
-  ui-virtualization:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: ui-virtualization
-      - build_npm:
-          repo: ui-virtualization
-  store:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: store
-      - build_npm:
-          repo: store
-  script:
-    executor: docker-circleci
-    steps:
-      - clone_repo:
-          repo: script
-      - build_npm:
-          repo: script
 
 workflows:
   build:
     jobs:
       - aurelia_v1_tests/run_all:
-          name: polyfills
-          repo_name: polyfills
+          name: "polyfills"
+          repo_name: "polyfills"
       - aurelia_v1_tests/run_all:
-          name: pal
-          repo_name: pal
+          name: "pal"
+          repo_name: "pal"
       - aurelia_v1_tests/run_all:
-          name: logging
-          repo_name: logging
+          name: "logging"
+          repo_name: "logging"
       - aurelia_v1_tests/run_all:
-          name: logging-console
-          repo_name: logging-console
+          name: "logging-console"
+          repo_name: "logging-console"
       - aurelia_v1_tests/run_all:
-          name: metadata
-          repo_name: metadata
+          name: "metadata"
+          repo_name: "metadata"
       - aurelia_v1_tests/run_all:
-          name: history
-          repo_name: history
+          name: "history"
+          repo_name: "history"
       - aurelia_v1_tests/run_all:
-          name: history-browser
-          repo_name: history-browser
+          name: "history-browser"
+          repo_name: "history-browser"
       - aurelia_v1_tests/run_all:
-          name: path
-          repo_name: path
+          name: "path"
+          repo_name: "path"
       - aurelia_v1_tests/run_all:
-          name: http-client
-          repo_name: http-client
+          name: "http-client"
+          repo_name: "http-client"
       - aurelia_v1_tests/run_all:
-          name: fetch-client
-          repo_name: fetch-client
+          name: "loader"
+          repo_name: "loader"
       - aurelia_v1_tests/run_all:
-          name: loader
-          repo_name: loader
+          name: "loader-default"
+          repo_name: "loader-default"
       - aurelia_v1_tests/run_all:
-          name: loader-default
-          repo_name: loader-default
+          name: "event-aggregator"
+          repo_name: "event-aggregator"
       - aurelia_v1_tests/run_all:
-          name: event-aggregator
-          repo_name: event-aggregator
+          name: "task-queue"
+          repo_name: "task-queue"
       - aurelia_v1_tests/run_all:
-          name: task-queue
-          repo_name: task-queue
+          name: "route-recognizer"
+          repo_name: "route-recognizer"
       - aurelia_v1_tests/run_all:
-          name: route-recognizer
-          repo_name: route-recognizer
+          name: "binding"
+          repo_name: "binding"
       - aurelia_v1_tests/run_all:
-          name: binding
-          repo_name: binding
+          name: "templating"
+          repo_name: "templating"
       - aurelia_v1_tests/run_all:
-          name: templating
-          repo_name: templating
+          name: "templating-binding"
+          repo_name: "templating-binding"
       - aurelia_v1_tests/run_all:
-          name: templating-binding
-          repo_name: templating-binding
+          name: "bootstrapper"
+          repo_name: "bootstrapper"
       - aurelia_v1_tests/run_all:
-          name: bootstrapper
-          repo_name: bootstrapper
-      - aurelia_v1_tests/run_all:
-          name: i18n
-          repo_name: i18n
-      - aurelia_v1_tests/run_all:
-          name: validation
-          repo_name: validation
+          name: "i18n"
+          repo_name: "i18n"
