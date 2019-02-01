@@ -299,11 +299,9 @@ workflows:
     jobs:
       - polyfills
       - pal
-      - pal-browser
       - logging
       - logging-console
       - metadata
-      - dependency-injection
       - history
       - history-browser
       - path
@@ -317,10 +315,6 @@ workflows:
       - templating
       - templating-binding
       - bootstrapper
-      - animator-velocity
       - i18n
       - validation
       - dialog
-      - ui-virtualization
-      - store
-      - script
