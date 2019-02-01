@@ -1,5 +1,3 @@
-version: 2.1
-
 description: Aurelia V1 tests
 
 orbs:
@@ -39,7 +37,8 @@ orbs:
         working_directory: "~/repo"
         docker:
           - image: "circleci/node:<< parameters.node_version >>-stretch-browsers"
-
+          
+version: 2.1
 workflows:
   run_aurelia_v1_tests:
     jobs:
