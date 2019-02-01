@@ -34,6 +34,8 @@ commands:
           name: Build
           command: |
             cd << parameters.repo >>
+            npm i jspm
+            ./node_modules/.bin/jspm install
             ./node_modules/.bin/gulp build
             ./node_modules/.bin/gulp test
             
