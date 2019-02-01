@@ -35,6 +35,7 @@ commands:
           command: |
             cd << parameters.repo >>
             ./node_modules/.bin/gulp build
+            ./node_modules/.bin/gulp test
             
   build_npm:
     parameters:
@@ -46,6 +47,7 @@ commands:
           command: |
             cd << parameters.repo >>
             npm run build
+            npm run test
             
 
 jobs:
