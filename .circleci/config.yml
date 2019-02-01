@@ -3,21 +3,31 @@ description: # The purpose of this orb
 orbs:
   aurelia_v1_tests:
     executors:
-      specialthingsexecutor:
+      docker_circleci:
         docker:
           - image: circleci/node:10.12-stretch-browsers
     commands:
-      dospecialthings:
+      clone_install_build_test:
         steps:
-          - run: echo "We will now do special things"
+          - run: git clone https://github.com/aurelia/polyfills
+          - run:
+              name: Install
+              command: |
+                cd polyfills>
+                npm ci
+                npm i jspm
+                ./node_modules/.bin/jspm install
+                ./node_modules/.bin/gulp build
+                ./node_modules/.bin/karma start --single-run
+                ./node_modules/.bin/gulp prepare-release
     jobs:
-      myjob:
-        executor: specialthingsexecutor
+      run_all:
+        executor: docker_circleci
         steps:
-          - dospecialthings
+          - clone_install_build_test
 
 version: 2.1
 workflows:
   main:
     jobs:
-      - aurelia_v1_tests/myjob
+      - aurelia_v1_tests/run_all
