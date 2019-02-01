@@ -14,23 +14,47 @@ commands:
     steps:
       - run: git clone https://github.com/aurelia/<<parameters.repo_name>> .
   configure_git:
+    parameters:
+      email:
+        type: string
+        default: "aurelia@bluespire.com"
+      name:
+        type: string
+        default: "AureliaEffect"
     steps:
       - run:
           name: "git config"
           command: |
-            git config --global user.email "aurelia@bluespire.com"
-            git config --global user.name "AureliaEffect"
+            git config --global user.email <<parameters.email>>
+            git config --global user.name <<parameters.name>>
             git config --global core.mergeoptions --no-edit
   setup_verdaccio:
+    parameters:
+      email:
+        type: string
+        default: "aurelia@bluespire.com"
+      name:
+        type: string
+        default: "aureliaeffect"
+      password:
+        type: string
+        default: "aurelia"
+      registry:
+        type: string
+        default: "http://localhost:4873"
     steps:
       - run: sudo npm i -g verdaccio npm-cli-login
       - run:
           name: "verdaccio"
           background: true
           command: verdaccio
-      - run: npm-cli-login -u aureliaeffect -p aurelia -e aurelia@bluespire.com -r http://localhost:4873
+      - run: npm-cli-login -u <<parameters.name>> -p <<parameters.password>> -e <<parameters.email>> -r <<parameters.registry>>
   npm_publish:
+    parameters:
+      registry:
+        type: string
+        default: "http://localhost:4873"
     steps:
       - run:
           name: "npm publish local"
-          command: npm publish --registry http://localhost:4873
+          command: npm publish --registry <<parameters.registry>>

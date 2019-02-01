@@ -6,6 +6,16 @@ orbs:
 
 commands:
   install_build_test_gulp:
+    parameters:
+      test_command:
+        type: string
+        default: "./node_modules/.bin/karma start --single-run"
+      build_command:
+        type: string
+        default: "./node_modules/.bin/gulp build"
+      prepare_release_command:
+        type: string
+        default: "./node_modules/.bin/gulp prepare-release"
     steps:
       - run:
           name: install
@@ -15,15 +25,18 @@ commands:
             ./node_modules/.bin/jspm install
       - run:
           name: test
-          command: ./node_modules/.bin/karma start --single-run
+          command: <<parameters.test_command>>
       - run:
           name: build
-          command: ./node_modules/.bin/gulp build
+          command: <<parameters.build_command>>
       - run:
           name: prepare-release
-          command: ./node_modules/.bin/gulp prepare-release
+          command: <<parameters.prepare_release_command>>
   install_run_e2e_tests:
     parameters:
+      test_repo:
+        type: string
+        default: "https://github.com/aurelia/e2e-tests"
       registry:
         type: string
         default: "http://localhost:4873"
@@ -31,7 +44,7 @@ commands:
       - run:
           name: "install and run e2e tests"
           command: |
-            git clone https://github.com/aurelia/e2e-tests
+            git clone <<parameters.test_repo>>
             cd e2e-tests
             npm install --registry <<parameters.registry>>
             npm run build
