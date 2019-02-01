@@ -71,6 +71,7 @@ jobs:
         type: string
       process:
         type: string
+        default: "gulp"
     executor: common/docker_circleci
     steps:
       - run: mkdir <<parameters.repo_name>>
@@ -83,10 +84,9 @@ jobs:
       - common/npm_publish
   run_all:
     parameters:
-      repo_name:
-        type: string
       process:
         type: string
+        default: "gulp"
     executor: common/docker_circleci
     steps:
       - checkout
