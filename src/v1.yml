@@ -137,9 +137,9 @@ jobs:
         default: "chore(all): add latest build artifacts"
     executor: common/docker_circleci
     steps:
+      - checkout
       - common/configure_git
-      - common/checkout_common
-      - run: git checkout <<parameters.to>> && git status
+      - run: git checkout <<parameters.to>> && git status && git log
       - run: git pull && git status
       - run: git checkout <<parameters.from>> && git status
       - run: git pull && git status
