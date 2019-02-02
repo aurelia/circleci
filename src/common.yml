@@ -1,5 +1,5 @@
 version: 2.1
-description: Aurelia shacommonred utilities
+description: Aurelia common utilities
 
 executors:
   docker_circleci:
@@ -52,12 +52,11 @@ commands:
           background: true
           command: verdaccio
       - run: npm-cli-login -u <<parameters.username>> -p <<parameters.password>> -e <<parameters.email>> -r <<parameters.registry>>
-  npm_publish:
+  npm_publish_verdaccio:
     parameters:
       registry:
         type: string
         default: "http://localhost:4873"
     steps:
-      - run:
-          name: "npm publish local"
-          command: npm publish --registry <<parameters.registry>>
+      - run: npm publish --registry <<parameters.registry>>
+
