@@ -147,9 +147,3 @@ jobs:
           from: <<parameters.from>>
           to: <<parameters.to>>
           message: <<parameters.message>>
-    requires:
-      - build_test
-    filters:
-      branches:
-        only:
-          - <<parameters.from>>
