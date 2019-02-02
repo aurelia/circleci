@@ -159,6 +159,7 @@ jobs:
       args:
         type: string
         default: ""
+    executor: common/docker_circleci
     steps:
       - checkout
       - run: git checkout <<parameters.branch>>
