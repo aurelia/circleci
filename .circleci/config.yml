@@ -8,11 +8,11 @@ workflows:
     jobs:
       - orb-tools/publish:
           orb-path: src/common.yml
-          orb-ref: aurelia/common@0.0.13
+          orb-ref: aurelia/common@0.0.14
           publish-token-variable: "$CIRCLECI_DEV_API_TOKEN"
           validate: true
       - orb-tools/publish:
           orb-path: src/v1.yml
-          orb-ref: aurelia/v1@0.0.28
+          orb-ref: aurelia/v1@0.0.29
           publish-token-variable: "$CIRCLECI_DEV_API_TOKEN"
           validate: true
