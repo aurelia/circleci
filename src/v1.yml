@@ -27,9 +27,6 @@ commands:
           name: test
           command: <<parameters.test_command>>
       - run:
-          name: build
-          command: <<parameters.build_command>>
-      - run:
           name: prepare-release
           command: <<parameters.prepare_release_command>>
   install_run_e2e_tests:
@@ -163,6 +160,7 @@ jobs:
     executor: common/docker_circleci
     steps:
       - checkout
+      - common/configure_git
       - run: git checkout <<parameters.branch>> && git status
       - run: git pull && git status
       - run:
