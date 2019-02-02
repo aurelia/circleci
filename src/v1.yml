@@ -83,16 +83,16 @@ commands:
     steps:
       - run: git add dist/* --force
       - run: git stash
-      - run: git checkout << parameters.to >>
+      - run: git checkout <<parameters.to>>
       - run: git pull
-      - run: git merge << parameters.from >> --no-ff --no-edit -Xtheirs
+      - run: git merge <<parameters.from>> --no-ff --no-edit -Xtheirs
       - run: rm -rf dist
       - run: git add .
       - run: git stash pop
       - run: git add dist/* --force
       - run: git add .
-      - run: git commit --allow-empty -m "<< parameters.message >>"
-      - run: git push origin << parameters.to >>
+      - run: git commit --allow-empty -m "<<parameters.message>>"
+      - run: git push origin <<parameters.to>>
 
 jobs:
   build_test_external:
@@ -148,3 +148,22 @@ jobs:
           from: <<parameters.from>>
           to: <<parameters.to>>
           message: <<parameters.message>>
+  npm_publish:
+    parameters:
+      tag:
+        type: string
+        default: "latest"
+      branch:
+        type: string
+        default: "master"
+      args:
+        type: string
+        default: ""
+    steps:
+      - checkout
+      - run: git checkout <<parameters.branch>>
+      - run: git pull
+      - run:
+          name: "Authenticate with registry"
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run: npm publish --tag <<parameters.tag>> <<parameters.args>>
