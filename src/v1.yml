@@ -80,9 +80,7 @@ commands:
     steps:
       - run: git add dist/* --force && git status
       - run: git stash && git status
-      - run: git fetch --force origin "<<parameters.to>>:remotes/origin/<<parameters.to>>" && git status
       - run: git checkout <<parameters.to>> && git status
-      - run: git merge && git status
       - run: git merge <<parameters.from>> --no-ff --no-edit -Xtheirs && git status
       - run: rm -rf dist && git status
       - run: git add . && git status
@@ -141,6 +139,10 @@ jobs:
     steps:
       - checkout
       - common/configure_git
+      - run: git checkout <<parameters.to>> && git status
+      - run: git pull && git status
+      - run: git checkout <<parameters.from>> && git status
+      - run: git pull && git status
       - install_build_test_gulp
       - merge_and_dist:
           from: <<parameters.from>>

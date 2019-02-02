@@ -30,7 +30,6 @@ commands:
           command: |
             git config --global user.email <<parameters.email>>
             git config --global user.name <<parameters.username>>
-            git config --global core.editor "vim"
             git config --global core.mergeoptions --no-edit
   setup_verdaccio:
     parameters:
