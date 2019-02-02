@@ -131,8 +131,10 @@ jobs:
         default: "gulp"
       from:
         type: string
+        default: "develop"
       to:
         type: string
+        default: "master"
       message:
         type: string
         default: "chore(all): add latest build artifacts"
@@ -145,3 +147,9 @@ jobs:
           from: <<parameters.from>>
           to: <<parameters.to>>
           message: <<parameters.message>>
+    requires:
+      - build_test
+    filters:
+      branches:
+        only:
+          - <<parameters.from>>
