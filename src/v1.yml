@@ -84,6 +84,7 @@ commands:
       - run: git add dist/* --force
       - run: git stash
       - run: git checkout << parameters.to >>
+      - run: git pull
       - run: git merge << parameters.from >> --no-ff --no-edit -Xtheirs
       - run: rm -rf dist
       - run: git add .
