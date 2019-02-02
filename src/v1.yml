@@ -138,7 +138,7 @@ jobs:
     executor: common/docker_circleci
     steps:
       - common/configure_git
-      - git clone $CIRCLE_REPOSITORY_URL .
+      - run: git clone $CIRCLE_REPOSITORY_URL .
       - run: git checkout <<parameters.to>> && git status
       - run: git pull && git status
       - run: git checkout <<parameters.from>> && git status
