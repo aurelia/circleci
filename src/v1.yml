@@ -162,6 +162,7 @@ jobs:
       - checkout
       - common/configure_git
       - run: git fetch origin
+      - run: git checkout <<parameters.to>> && git status
       - run: git reset --hard origin/<<parameters.to>> && git status
       - run: git merge <<parameters.from>> --squash && git status
       - run: git reset HEAD dist
