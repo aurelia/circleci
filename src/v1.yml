@@ -9,13 +9,13 @@ commands:
     parameters:
       test_command:
         type: string
-        default: "./node_modules/.bin/karma start --single-run"
+        default: "npm run test"
       build_command:
         type: string
-        default: "./node_modules/.bin/gulp build"
+        default: "npm run build"
       prepare_release_command:
         type: string
-        default: "./node_modules/.bin/gulp prepare-release"
+        default: "npm run cut-release"
     steps:
       - run:
           name: install
