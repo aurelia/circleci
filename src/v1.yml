@@ -82,7 +82,7 @@ commands:
       - run: git add dist/* --force && git status
       - run: git stash && git status
       - run: git checkout <<parameters.to>> && git status
-      - run: git reset --hard origin/master && git status
+      - run: git reset --hard origin/<<parameters.to>> && git status
       - run: git merge <<parameters.from>> --no-ff --no-edit -Xtheirs && git status
       - run: rm -rf dist && git status
       - run: git add . && git status
@@ -146,14 +146,32 @@ jobs:
           from: <<parameters.from>>
           to: <<parameters.to>>
           message: <<parameters.message>>
+  merge_back:
+    parameters:
+      from:
+        type: string
+        default: "master"
+      to:
+        type: string
+        default: "develop"
+      message:
+        type: string
+        default: "chore(all): merge latest release"
+    executor: common/docker_circleci
+    steps:
+      - checkout
+      - common/configure_git
+      - run: git fetch origin
+      - run: git reset --hard origin/<<parameters.to>> && git status
+      - run: git merge <<parameters.from>> --squash && git status
+      - run: git reset HEAD dist
+      - run: git commit --allow-empty -m "<<parameters.message>>" && git status
+      - run: git push origin <<parameters.to>> && git status
   npm_publish:
     parameters:
       tag:
         type: string
         default: "latest"
-      branch:
-        type: string
-        default: "master"
       args:
         type: string
         default: ""
@@ -161,8 +179,6 @@ jobs:
     steps:
       - checkout
       - common/configure_git
-      - run: git checkout <<parameters.branch>> && git status
-      - run: git pull && git status
       - run:
           name: "Authenticate with registry"
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
