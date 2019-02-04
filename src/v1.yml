@@ -21,7 +21,6 @@ commands:
           name: install
           command: |
             npm ci
-            npm i jspm
             ./node_modules/.bin/jspm install
       - run:
           name: test
