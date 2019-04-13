@@ -24,7 +24,7 @@ commands:
           name: install-npm
           command: npm ci
       - when:
-          condition: << use_jspm >>
+          condition: <<parameters.use_jspm>>
           steps:
             - run:
                 name: install-jspm
