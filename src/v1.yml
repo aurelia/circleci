@@ -16,12 +16,19 @@ commands:
       prepare_release_command:
         type: string
         default: "npm run cut-release"
+      use_jspm:
+        type: boolean
+        default: true
     steps:
       - run:
-          name: install
-          command: |
-            npm ci
-            ./node_modules/.bin/jspm install
+          name: install-npm
+          command: npm ci
+      - when:
+          condition: << use_jspm >>
+          steps:
+            - run:
+                name: install-jspm
+                command: ./node_modules/.bin/jspm install
       - run:
           name: test
           command: <<parameters.test_command>>
@@ -99,6 +106,9 @@ jobs:
       process:
         type: string
         default: "gulp"
+      use_jspm:
+        type: boolean
+        default: true
     executor: common/docker_circleci
     steps:
       - run: mkdir <<parameters.repo_name>>
@@ -107,19 +117,24 @@ jobs:
           dir: <<parameters.repo_name>>
       - common/configure_git
       - common/setup_verdaccio
-      - install_build_test_gulp
+      - install_build_test_gulp:
+          use_jspm: <<parameters.use_jspm>>
       - common/npm_publish_verdaccio
   build_test:
     parameters:
       process:
         type: string
         default: "gulp"
+      use_jspm:
+        type: boolean
+        default: true
     executor: common/docker_circleci
     steps:
       - checkout
       - common/configure_git
       - common/setup_verdaccio
-      - install_build_test_gulp
+      - install_build_test_gulp:
+          use_jspm: <<parameters.use_jspm>>
       - common/npm_publish_verdaccio
       - install_run_e2e_tests
   build_merge:
@@ -136,11 +151,15 @@ jobs:
       message:
         type: string
         default: "chore(all): add latest build artifacts"
+      use_jspm:
+        type: boolean
+        default: true
     executor: common/docker_circleci
     steps:
       - checkout
       - common/configure_git
-      - install_build_test_gulp
+      - install_build_test_gulp:
+          use_jspm: <<parameters.use_jspm>>
       - merge_and_dist:
           from: <<parameters.from>>
           to: <<parameters.to>>
