@@ -73,7 +73,7 @@ commands:
           name: "run the e2e tests"
           command: |
             cd e2e-tests
-            npm run protractor
+            npm run e2e
   merge_and_dist:
     parameters:
       from:
